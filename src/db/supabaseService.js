@@ -81,7 +81,15 @@ export const dbHelpers = {
       .order('team_number');
 
     if (error) throw new Error(error.message);
-    return data;
+    
+    // Map snake_case database fields to camelCase for frontend consistency
+    return data.map(team => ({
+      id: team.id,
+      quizId: team.quiz_id,
+      name: team.name,
+      teamNumber: team.team_number,
+      createdAt: team.created_at
+    }));
   },
 
   // Score operations
@@ -105,7 +113,16 @@ export const dbHelpers = {
       .order('round');
 
     if (error) throw new Error(error.message);
-    return data;
+
+    // Map snake_case database fields to camelCase for frontend consistency
+    return data.map(score => ({
+      id: score.id,
+      quizId: score.quiz_id,
+      teamId: score.team_id,
+      round: score.round,
+      points: score.points,
+      createdAt: score.created_at
+    }));
   },
 
   async calculateTotalScores(quizId) {
@@ -115,7 +132,7 @@ export const dbHelpers = {
     const scores = await this.getScoresByQuiz(quizId);
 
     return teams.map(team => {
-      const teamScores = scores.filter(score => score.team_id === team.id);
+      const teamScores = scores.filter(score => score.teamId === team.id); // Use camelCase teamId
       const totalPoints = teamScores.reduce((sum, score) => sum + (score.points || 0), 0);
 
       return {
@@ -156,7 +173,7 @@ export const dbHelpers = {
       const results = teams.map(team => {
         const teamResult = {
           id: team.id,
-          teamNumber: team.team_number,
+          teamNumber: team.teamNumber, // Use the mapped camelCase field
           name: team.name,
           roundScores: {},
           totalPoints: 0
@@ -168,7 +185,7 @@ export const dbHelpers = {
         }
 
         // Fill in actual scores
-        const teamScores = scores.filter(score => score.team_id === team.id);
+        const teamScores = scores.filter(score => score.teamId === team.id); // Use camelCase teamId
         teamScores.forEach(score => {
           teamResult.roundScores[score.round] = score.points || 0;
           teamResult.totalPoints += score.points || 0;
