@@ -1,7 +1,7 @@
-// Database service using API calls to SQLite backend
-import { dbHelpers } from './apiService';
+// Database service using Supabase for direct database access
+import { dbHelpers } from './supabaseService';
 
-// Re-export the API-based helpers to maintain compatibility
+// Re-export the Supabase-based helpers
 export { dbHelpers };
 
 // For backward compatibility, also export as default
