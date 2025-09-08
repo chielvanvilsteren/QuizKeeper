@@ -1,89 +1,65 @@
-// Navigation Header Component
+// Modern Header Component for QuizKeeper
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from './FormComponents';
-import { useQuizStore } from '../store/quizStore';
 
 export const Header = () => {
   const location = useLocation();
-  const { currentQuiz, isQuizStarted, toggleLeaderboard } = useQuizStore();
 
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="bg-blue-600 text-white shadow-lg">
+    <header className="bg-primary shadow-lg sticky top-0 z-50 animate-fade-in">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo/Title */}
-          <div className="flex items-center">
-            <Link to="/" className="text-xl font-bold hover:text-blue-200">
-              🎯 Quizkeeper
-            </Link>
-          </div>
+          {/* Logo and Brand */}
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center group-hover:bg-accent transition-colors duration-200">
+              <span className="text-white font-bold text-xl">Q</span>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-white group-hover:text-background transition-colors duration-200">
+                QuizKeeper
+              </h1>
+              <p className="text-neutral text-sm -mt-1">De slimste pubquiz app</p>
+            </div>
+          </Link>
 
           {/* Navigation */}
-          <nav className="hidden md:flex space-x-4">
-            <Link
-              to="/"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                isActive('/') 
-                  ? 'bg-blue-700 text-white' 
-                  : 'text-blue-100 hover:text-white hover:bg-blue-500'
-              }`}
-            >
-              Home
-            </Link>
-            <Link
-              to="/new-quiz"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                isActive('/new-quiz') 
-                  ? 'bg-blue-700 text-white' 
-                  : 'text-blue-100 hover:text-white hover:bg-blue-500'
-              }`}
-            >
-              Nieuwe Quiz
-            </Link>
-            {currentQuiz && (
-              <Link
-                to={`/teams/${currentQuiz.id}`}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActive(`/teams/${currentQuiz.id}`) 
-                    ? 'bg-blue-700 text-white' 
-                    : 'text-blue-100 hover:text-white hover:bg-blue-500'
-                }`}
-              >
-                Teams
-              </Link>
-            )}
+          <nav className="hidden md:flex items-center space-x-1">
+            <NavLink to="/" isActive={isActive('/')}>
+              🏠 Home
+            </NavLink>
+            <NavLink to="/new" isActive={isActive('/new')}>
+              ➕ Nieuwe Quiz
+            </NavLink>
           </nav>
 
-          {/* Actions */}
-          <div className="flex items-center space-x-3">
-            {/* Current Quiz Info */}
-            {currentQuiz && (
-              <div className="hidden lg:block text-sm text-blue-100">
-                <span className="font-medium">{currentQuiz.name}</span>
-                {isQuizStarted && (
-                  <span className="ml-2 px-2 py-1 bg-green-500 rounded-full text-xs">
-                    Actief
-                  </span>
-                )}
-              </div>
-            )}
-
-            {/* Leaderboard Button - alleen tonen tijdens quiz */}
-            {currentQuiz && isQuizStarted && (
-              <Button
-                onClick={toggleLeaderboard}
-                variant="secondary"
-                className="bg-green-600 hover:bg-green-700 focus:ring-green-500"
-              >
-                📊 Tussenstand
-              </Button>
-            )}
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button className="text-white hover:text-background transition-colors">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
     </header>
   );
 };
+
+// Navigation Link Component
+const NavLink = ({ to, children, isActive }) => (
+  <Link
+    to={to}
+    className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+      isActive
+        ? 'bg-secondary text-white shadow-md'
+        : 'text-neutral hover:text-white hover:bg-accent'
+    }`}
+  >
+    {children}
+  </Link>
+);
+
+export default Header;

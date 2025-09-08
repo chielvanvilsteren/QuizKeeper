@@ -1,4 +1,4 @@
-// Reusable Modal/Popup Component
+// Modern Modal Components for QuizKeeper with beautiful styling
 import React from 'react';
 import { Button } from './FormComponents';
 
@@ -13,21 +13,21 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'medium' }) => 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center animate-fade-in">
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+        className="fixed inset-0 bg-black/60 transition-opacity backdrop-blur-sm"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className={`relative bg-white rounded-lg shadow-xl ${sizeClasses[size]} w-full mx-4 max-h-screen overflow-y-auto`}>
+      <div className={`relative bg-background rounded-2xl shadow-2xl ${sizeClasses[size]} w-full mx-4 max-h-screen overflow-y-auto border border-neutral/20 animate-slide-up`}>
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+        <div className="flex items-center justify-between p-6 border-b border-neutral/20 bg-white rounded-t-2xl">
+          <h2 className="text-2xl font-bold text-primary">{title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 focus:outline-none"
+            className="text-neutral hover:text-primary focus:outline-none transition-colors p-2 hover:bg-background rounded-lg"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -44,52 +44,82 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'medium' }) => 
   );
 };
 
-// Score Table Component for Leaderboard
+// Modern Score Table Component for Leaderboard
 export const ScoreTable = ({ teams, currentRound }) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Positie
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Team #
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Team Naam
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Totaal Punten
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {teams.map((team, index) => (
-            <tr key={team.id} className={index < 3 ? 'bg-yellow-50' : ''}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {index === 0 && '🥇'} {index === 1 && '🥈'} {index === 2 && '🥉'}
-                {index >= 3 && `${index + 1}.`}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                Team {team.teamNumber}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {team.name}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {team.totalPoints || 0} punten
-              </td>
+    <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-neutral/20">
+      <div className="bg-primary px-6 py-4">
+        <h3 className="text-xl font-bold text-white flex items-center">
+          🏆 Tussenstand - Na Ronde {currentRound - 1}
+        </h3>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full">
+          <thead className="bg-secondary/10">
+            <tr>
+              <th className="px-6 py-4 text-left text-sm font-bold text-primary uppercase tracking-wider">
+                Positie
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-bold text-primary uppercase tracking-wider">
+                Team
+              </th>
+              <th className="px-6 py-4 text-center text-sm font-bold text-primary uppercase tracking-wider">
+                Punten
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {teams.length === 0 && (
-        <div className="text-center py-8 text-gray-500">
-          Nog geen teams toegevoegd
-        </div>
-      )}
+          </thead>
+          <tbody className="divide-y divide-neutral/20">
+            {teams.map((team, index) => (
+              <tr
+                key={team.id}
+                className={`transition-colors hover:bg-background/50 ${
+                  index < 3 ? 'bg-gradient-to-r from-yellow-50 to-orange-50' : 'bg-white'
+                }`}
+              >
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg ${
+                      index === 0 ? 'bg-yellow-400 text-yellow-900' :
+                      index === 1 ? 'bg-gray-300 text-gray-700' :
+                      index === 2 ? 'bg-orange-400 text-orange-900' :
+                      'bg-neutral text-white'
+                    }`}>
+                      {index === 0 && '🥇'}
+                      {index === 1 && '🥈'}
+                      {index === 2 && '🥉'}
+                      {index >= 3 && `${index + 1}`}
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 bg-secondary text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                      {team.teamNumber}
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold text-primary">{team.name}</div>
+                      <div className="text-sm text-neutral">Team {team.teamNumber}</div>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">
+                  <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary text-white font-bold text-lg">
+                    {team.totalPoints || 0}
+                    <span className="ml-1 text-sm opacity-80">pts</span>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {teams.length === 0 && (
+          <div className="text-center py-12 bg-background/30">
+            <div className="text-4xl mb-4">🎯</div>
+            <p className="text-neutral text-lg">Nog geen teams toegevoegd</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
@@ -231,7 +261,78 @@ export const DetailedResultsTable = ({ results }) => {
   );
 };
 
-// Quiz Completion Modal Component
+// Confirm Modal Component (replaces window.confirm)
+export const ConfirmModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  message,
+  confirmText = 'Bevestigen',
+  cancelText = 'Annuleren',
+  type = 'warning'
+}) => {
+  const getIcon = () => {
+    switch (type) {
+      case 'danger':
+        return '🚨';
+      case 'warning':
+        return '⚠️';
+      case 'question':
+        return '❓';
+      default:
+        return '⚠️';
+    }
+  };
+
+  const getColorClasses = () => {
+    switch (type) {
+      case 'danger':
+        return 'bg-red-100 text-red-800';
+      case 'warning':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'question':
+        return 'bg-blue-100 text-blue-800';
+      default:
+        return 'bg-yellow-100 text-yellow-800';
+    }
+  };
+
+  const handleConfirm = () => {
+    onConfirm();
+    onClose();
+  };
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={title || 'Bevestiging'}
+      size="medium"
+    >
+      <div className="text-center">
+        <div className={`mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 ${getColorClasses()}`}>
+          <span className="text-2xl">{getIcon()}</span>
+        </div>
+
+        <p className="text-gray-700 mb-6 whitespace-pre-line">
+          {message}
+        </p>
+
+        <div className="space-y-3">
+          <Button onClick={handleConfirm} variant="primary" className="w-full">
+            {confirmText}
+          </Button>
+          <Button onClick={onClose} variant="secondary" className="w-full">
+            {cancelText}
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+// Modern Quiz Completion Modal Component
 export const QuizCompletionModal = ({ isOpen, onClose, results, onShowDetailed }) => {
   if (!results || !results.teams) {
     return null;
@@ -239,6 +340,7 @@ export const QuizCompletionModal = ({ isOpen, onClose, results, onShowDetailed }
 
   const { quiz, teams } = results;
   const winner = teams[0];
+  const topThree = teams.slice(0, 3);
 
   return (
     <Modal
@@ -247,50 +349,54 @@ export const QuizCompletionModal = ({ isOpen, onClose, results, onShowDetailed }
       title="🏁 Pubquiz Afgerond!"
       size="large"
     >
-      <div className="text-center">
+      <div className="text-center space-y-8">
         {/* Celebration Header */}
-        <div className="mb-8">
-          <div className="mx-auto w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+        <div className="animate-bounce-subtle">
+          <div className="mx-auto w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-6 shadow-lg">
             <span className="text-4xl">🎉</span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-primary mb-2">
             Gefeliciteerd!
           </h2>
-          <p className="text-gray-600">
-            De pubquiz "{quiz.name}" is succesvol afgerond!
+          <p className="text-neutral text-lg">
+            De pubquiz "<span className="font-bold text-primary">{quiz.name}</span>" is succesvol afgerond!
           </p>
         </div>
 
         {/* Winner Announcement */}
-        <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-lg p-6 mb-6">
-          <div className="flex items-center justify-center mb-4">
-            <span className="text-6xl mr-4">🏆</span>
+        <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl p-8 text-white shadow-lg">
+          <div className="flex items-center justify-center mb-6">
+            <span className="text-6xl mr-6">🏆</span>
             <div className="text-left">
-              <h3 className="text-2xl font-bold text-white mb-1">De Winnaar!</h3>
-              <p className="text-yellow-100 text-lg">
+              <h3 className="text-3xl font-bold mb-2">De Winnaar!</h3>
+              <p className="text-xl font-semibold opacity-90">
                 Team {winner.teamNumber}: {winner.name}
               </p>
-              <p className="text-yellow-100 text-xl font-bold">
+              <p className="text-2xl font-bold mt-2">
                 {winner.totalPoints} punten
               </p>
             </div>
           </div>
         </div>
 
-        {/* Top 3 */}
-        <div className="mb-8">
-          <h4 className="text-lg font-semibold text-gray-900 mb-4">🏅 Top 3</h4>
-          <div className="grid grid-cols-3 gap-4">
-            {teams.slice(0, 3).map((team, index) => (
+        {/* Top 3 Podium */}
+        <div className="bg-white rounded-2xl p-6 border border-neutral/20">
+          <h4 className="text-xl font-bold text-primary mb-6">🏅 Top 3 Teams</h4>
+          <div className="grid grid-cols-3 gap-6">
+            {topThree.map((team, index) => (
               <div key={team.id} className="text-center">
-                <div className="text-3xl mb-2">
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl ${
+                  index === 0 ? 'bg-yellow-400' :
+                  index === 1 ? 'bg-gray-300' :
+                  'bg-orange-400'
+                }`}>
                   {index === 0 && '🥇'}
                   {index === 1 && '🥈'}
                   {index === 2 && '🥉'}
                 </div>
-                <div className="text-sm font-medium text-gray-900">{team.name}</div>
-                <div className="text-xs text-gray-500">Team {team.teamNumber}</div>
-                <div className="text-sm font-bold text-blue-600">{team.totalPoints} pts</div>
+                <div className="font-bold text-primary text-lg">{team.name}</div>
+                <div className="text-sm text-neutral">Team {team.teamNumber}</div>
+                <div className="text-lg font-bold text-secondary mt-1">{team.totalPoints} pts</div>
               </div>
             ))}
           </div>
@@ -298,19 +404,22 @@ export const QuizCompletionModal = ({ isOpen, onClose, results, onShowDetailed }
 
         {/* Action Buttons */}
         <div className="space-y-3">
-          <button
+          <Button
             onClick={onShowDetailed}
-            className="w-full px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
+            size="large"
+            className="w-full"
           >
             📊 Bekijk Gedetailleerde Resultaten
-          </button>
+          </Button>
 
-          <button
+          <Button
             onClick={onClose}
-            className="w-full px-6 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            variant="outline"
+            size="large"
+            className="w-full"
           >
-            Terug naar Home
-          </button>
+            🏠 Terug naar Home
+          </Button>
         </div>
       </div>
     </Modal>
@@ -898,73 +1007,3 @@ export const AlertModal = ({ isOpen, onClose, title, message, type = 'info' }) =
   );
 };
 
-// Confirm Modal Component (replaces window.confirm)
-export const ConfirmModal = ({
-  isOpen,
-  onClose,
-  onConfirm,
-  title,
-  message,
-  confirmText = 'Bevestigen',
-  cancelText = 'Annuleren',
-  type = 'warning'
-}) => {
-  const getIcon = () => {
-    switch (type) {
-      case 'danger':
-        return '🚨';
-      case 'warning':
-        return '⚠️';
-      case 'question':
-        return '❓';
-      default:
-        return '⚠️';
-    }
-  };
-
-  const getColorClasses = () => {
-    switch (type) {
-      case 'danger':
-        return 'bg-red-100 text-red-800';
-      case 'warning':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'question':
-        return 'bg-blue-100 text-blue-800';
-      default:
-        return 'bg-yellow-100 text-yellow-800';
-    }
-  };
-
-  const handleConfirm = () => {
-    onConfirm();
-    onClose();
-  };
-
-  return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={title || 'Bevestiging'}
-      size="medium"
-    >
-      <div className="text-center">
-        <div className={`mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 ${getColorClasses()}`}>
-          <span className="text-2xl">{getIcon()}</span>
-        </div>
-
-        <p className="text-gray-700 mb-6 whitespace-pre-line">
-          {message}
-        </p>
-
-        <div className="space-y-3">
-          <Button onClick={handleConfirm} variant="primary" className="w-full">
-            {confirmText}
-          </Button>
-          <Button onClick={onClose} variant="secondary" className="w-full">
-            {cancelText}
-          </Button>
-        </div>
-      </div>
-    </Modal>
-  );
-};
