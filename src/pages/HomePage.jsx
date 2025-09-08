@@ -24,22 +24,36 @@ export const HomePage = () => {
   const loadQuizzes = async () => {
     try {
       const allQuizzes = await dbHelpers.getAllQuizzes();
-      setQuizzes(allQuizzes);
+      // Ensure we always have an array, even if API returns something else
+      setQuizzes(Array.isArray(allQuizzes) ? allQuizzes : []);
 
-      // Check status for each quiz
-      const statuses = {};
-      const completed = {};
-      for (const quiz of allQuizzes) {
-        const scores = await dbHelpers.getScoresByQuiz(quiz.id);
-        const isCompleted = await dbHelpers.isQuizCompleted(quiz.id);
+      // Only process quiz statuses if we have valid data
+      if (Array.isArray(allQuizzes) && allQuizzes.length > 0) {
+        // Check status for each quiz
+        const statuses = {};
+        const completed = {};
+        for (const quiz of allQuizzes) {
+          try {
+            const scores = await dbHelpers.getScoresByQuiz(quiz.id);
+            const isCompleted = await dbHelpers.isQuizCompleted(quiz.id);
 
-        statuses[quiz.id] = scores.length > 0;
-        completed[quiz.id] = isCompleted;
+            statuses[quiz.id] = Array.isArray(scores) ? scores.length > 0 : false;
+            completed[quiz.id] = isCompleted;
+          } catch (err) {
+            console.error(`Error loading status for quiz ${quiz.id}:`, err);
+            statuses[quiz.id] = false;
+            completed[quiz.id] = false;
+          }
+        }
+        setQuizStatuses(statuses);
+        setQuizCompleted(completed);
       }
-      setQuizStatuses(statuses);
-      setQuizCompleted(completed);
     } catch (error) {
       console.error('Error loading quizzes:', error);
+      // Ensure quizzes is always an array even when there's an error
+      setQuizzes([]);
+      setQuizStatuses({});
+      setQuizCompleted({});
     } finally {
       setLoading(false);
     }

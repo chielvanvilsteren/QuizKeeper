@@ -17,18 +17,32 @@ export const useQuizStore = create((set, get) => ({
   setCurrentQuiz: (quiz) => set({ currentQuiz: quiz }),
 
   loadQuiz: async (quizId) => {
-    const quiz = await dbHelpers.getQuiz(quizId);
-    const teams = await dbHelpers.getTeamsByQuiz(quizId);
-    const scores = await dbHelpers.getScoresByQuiz(quizId);
+    try {
+      const quiz = await dbHelpers.getQuiz(quizId);
+      const teams = await dbHelpers.getTeamsByQuiz(quizId);
+      const scores = await dbHelpers.getScoresByQuiz(quizId);
 
-    set({
-      currentQuiz: quiz,
-      teams,
-      scores,
-      currentRound: 1,
-      currentTeamIndex: 0,
-      isQuizStarted: false
-    });
+      set({
+        currentQuiz: quiz,
+        teams: Array.isArray(teams) ? teams : [],
+        scores: Array.isArray(scores) ? scores : [],
+        currentRound: 1,
+        currentTeamIndex: 0,
+        isQuizStarted: false
+      });
+    } catch (error) {
+      console.error('Error loading quiz:', error);
+      // Set safe defaults on error
+      set({
+        currentQuiz: null,
+        teams: [],
+        scores: [],
+        currentRound: 1,
+        currentTeamIndex: 0,
+        isQuizStarted: false
+      });
+      throw error; // Re-throw to let calling component handle it
+    }
   },
 
   // Team actions
@@ -48,8 +62,15 @@ export const useQuizStore = create((set, get) => ({
   },
 
   loadTeams: async (quizId) => {
-    const teams = await dbHelpers.getTeamsByQuiz(quizId);
-    set({ teams });
+    try {
+      const teams = await dbHelpers.getTeamsByQuiz(quizId);
+      // Ensure teams is always an array, even if API returns something else
+      set({ teams: Array.isArray(teams) ? teams : [] });
+    } catch (error) {
+      console.error('Error loading teams:', error);
+      // Set empty array on error to prevent crashes
+      set({ teams: [] });
+    }
   },
 
   // Quiz flow actions
