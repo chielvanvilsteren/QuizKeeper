@@ -19,7 +19,7 @@ export const TeamsPage = () => {
 
   useEffect(() => {
     loadQuizData();
-  }, [quizId]);
+  }, [quizId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadQuizData = async () => {
     try {

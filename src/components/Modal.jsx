@@ -452,7 +452,6 @@ export const NextRoundConfirmationModal = ({
   const allTeamsHaveScores = teamsWithoutScore.length === 0;
 
   // Determine the correct text based on whether it's the last round
-  const actionText = isLastRound ? "Rond pubquiz af" : `Naar Ronde ${nextRound}`;
   const titleText = isLastRound ? "🏁 Pubquiz Afronden" : `🔄 Naar Ronde ${nextRound}`;
   const confirmText = isLastRound ? "doorgaan met het afronden van de pubquiz" : `doorgaan naar ronde ${nextRound}`;
   const buttonText = isLastRound ? "🏁 Rond Pubquiz Af" : `🔄 Naar Ronde ${nextRound}`;
@@ -654,7 +653,7 @@ export const RoundEditTable = ({ quizId, roundNumber, teams, onScoreUpdate, onCl
 
   React.useEffect(() => {
     loadRoundScores();
-  }, [quizId, roundNumber]);
+  }, [quizId, roundNumber]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadRoundScores = async () => {
     try {

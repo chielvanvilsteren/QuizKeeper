@@ -300,7 +300,7 @@ export const useQuizStore = create((set, get) => ({
 
   // Check if all teams have scores for current round and proceed to next round
   proceedToNextRoundWithCheck: async () => {
-    const { currentQuiz, currentRound } = get();
+    const { currentQuiz } = get();
     if (!currentQuiz) return { success: false, error: 'Geen actieve quiz' };
 
     try {

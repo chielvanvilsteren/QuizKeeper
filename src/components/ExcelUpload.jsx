@@ -1,7 +1,6 @@
 // Excel Upload Component for importing teams
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
-import { Button } from './FormComponents';
 
 export const ExcelUpload = ({ onTeamsImported, disabled = false }) => {
   const [uploading, setUploading] = useState(false);

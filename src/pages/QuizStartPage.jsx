@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FormField, Button, Card } from '../components/FormComponents';
-import { Modal, ScoreTable, QuizCompletionModal, DetailedResultsTable, RoundManagementModal, NextRoundConfirmationModal, RoundEditTable, AlertModal, ConfirmModal } from '../components/Modal';
+import { Modal, ScoreTable, QuizCompletionModal, DetailedResultsTable, RoundManagementModal, NextRoundConfirmationModal, RoundEditTable } from '../components/Modal';
 import { useQuizStore } from '../store/quizStore';
 import { dbHelpers } from '../db/database';
 
@@ -54,13 +54,13 @@ export const QuizStartPage = () => {
 
   useEffect(() => {
     initializeQuiz();
-  }, [quizId]);
+  }, [quizId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (showLeaderboard) {
       loadStandings();
     }
-  }, [showLeaderboard, currentRound]);
+  }, [showLeaderboard, currentRound]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const initializeQuiz = async () => {
     try {
@@ -145,7 +145,7 @@ export const QuizStartPage = () => {
     if (isQuizStarted && currentQuiz) {
       loadRoundScores();
     }
-  }, [isQuizStarted, currentQuiz, currentRound]);
+  }, [isQuizStarted, currentQuiz, currentRound]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleStartQuiz = () => {
     startQuiz();
