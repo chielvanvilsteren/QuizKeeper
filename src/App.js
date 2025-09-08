@@ -16,10 +16,10 @@ function App() {
           <Route path="/" element={<HomePage />} />
 
           {/* Nieuwe quiz aanmaken */}
-          <Route path="/new-quiz" element={<NewQuizPage />} />
+          <Route path="/new" element={<NewQuizPage />} />
 
           {/* Teams beheren voor een specifieke quiz */}
-          <Route path="/teams/:quizId" element={<TeamsPage />} />
+          <Route path="/quiz/:quizId/teams" element={<TeamsPage />} />
 
           {/* Quiz starten en scores invoeren */}
           <Route path="/quiz/:quizId/start" element={<QuizStartPage />} />

@@ -13,8 +13,12 @@ export const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center group-hover:bg-accent transition-colors duration-200">
-              <span className="text-white font-bold text-xl">Q</span>
+            <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center group-hover:bg-accent transition-colors duration-200 p-2">
+              <img
+                src="/favicon.ico"
+                alt="QuizKeeper Logo"
+                className="w-full h-full object-contain filter brightness-0 invert"
+              />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-white group-hover:text-background transition-colors duration-200">

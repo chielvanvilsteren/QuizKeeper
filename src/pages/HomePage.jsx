@@ -48,14 +48,6 @@ export const HomePage = () => {
     }
   };
 
-  const formatDate = (date) => {
-    return new Date(date).toLocaleDateString('nl-NL', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-neutral/20">
       <Header />
@@ -134,7 +126,7 @@ const QuizCard = ({ quiz, onDelete, className, style }) => {
 
   return (
     <div 
-      className={`bg-white rounded-xl p-6 border border-neutral/20 hover:shadow-lg transition-all duration-200 ${className}`}
+      className={`bg-background/80 rounded-xl p-6 border-2 border-black hover:shadow-lg hover:bg-background transition-all duration-200 ${className}`}
       style={style}
     >
       <div className="flex items-center justify-between">
@@ -146,7 +138,7 @@ const QuizCard = ({ quiz, onDelete, className, style }) => {
             </Badge>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-neutral">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-black">
             <div className="flex items-center">
               <span className="mr-2">📅</span>
               {new Date(quiz.date).toLocaleDateString('nl-NL')}
