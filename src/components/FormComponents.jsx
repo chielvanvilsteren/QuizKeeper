@@ -5,11 +5,11 @@ import React from 'react';
 export const Card = ({ children, title, className = '', ...props }) => {
   return (
     <div
-      className={`bg-background rounded-xl shadow-lg border border-neutral/20 p-6 transition-all duration-200 hover:shadow-xl animate-slide-up ${className}`}
+      className={`bg-surface rounded-xl shadow-lg border border-border p-6 transition-all duration-200 hover:shadow-xl animate-slide-up ${className}`}
       {...props}
     >
       {title && (
-        <h3 className="text-xl font-bold text-black mb-4 border-b border-neutral/20 pb-2">
+        <h3 className="text-xl font-bold text-text-dark mb-4 border-b border-border pb-2">
           {title}
         </h3>
       )}
@@ -32,12 +32,12 @@ export const Button = ({
   const baseClasses = 'font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95';
 
   const variants = {
-    primary: 'bg-secondary text-white hover:bg-accent focus:ring-secondary shadow-md hover:shadow-lg',
-    secondary: 'bg-neutral text-white hover:bg-primary focus:ring-neutral shadow-md hover:shadow-lg',
-    success: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 shadow-md hover:shadow-lg',
-    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-md hover:shadow-lg',
-    outline: 'border-2 border-secondary text-secondary hover:bg-secondary hover:text-white focus:ring-secondary',
-    ghost: 'text-primary hover:bg-background/50 focus:ring-primary'
+    primary: 'bg-primary text-white hover:bg-secondary focus:ring-primary shadow-md hover:shadow-lg',
+    secondary: 'bg-secondary text-white hover:bg-accent focus:ring-secondary shadow-md hover:shadow-lg',
+    success: 'bg-success text-white hover:bg-green-700 focus:ring-success shadow-md hover:shadow-lg',
+    danger: 'bg-error text-white hover:bg-red-700 focus:ring-error shadow-md hover:shadow-lg',
+    outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
+    ghost: 'text-primary hover:bg-background focus:ring-primary'
   };
 
   const sizes = {
@@ -62,43 +62,56 @@ export const Button = ({
 // Modern Form Field Component
 export const FormField = ({
   label,
+  type = 'text',
+  value,
+  onChange,
   error,
   required = false,
+  placeholder,
+  disabled = false,
   className = '',
-  children,
   ...props
 }) => {
-  const inputId = props.id || props.name;
+  const inputId = label?.toLowerCase().replace(/\s+/g, '-') || 'input';
 
   return (
     <div className={`space-y-2 ${className}`}>
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-sm font-semibold text-black"
+          className="block text-sm font-medium text-text-dark"
         >
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="text-error ml-1">*</span>}
         </label>
       )}
 
-      {children || (
-        <input
-          {...props}
-          id={inputId}
-          className={`
-            w-full px-4 py-3 rounded-lg border-2 transition-all duration-200
-            bg-white text-black placeholder-gray-500
-            border-neutral/30 focus:border-secondary focus:ring-4 focus:ring-secondary/20
-            hover:border-accent
-            ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}
-          `}
-        />
-      )}
+      <input
+        id={inputId}
+        type={type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        disabled={disabled}
+        required={required}
+        className={`
+          w-full px-4 py-3 
+          border rounded-lg
+          focus:outline-none focus:ring-2 focus:border-transparent
+          disabled:opacity-50 disabled:cursor-not-allowed
+          transition-all duration-200
+          ${error 
+            ? 'border-error focus:ring-error' 
+            : 'border-border focus:ring-primary'
+          }
+          ${disabled ? 'bg-gray-50' : 'bg-surface'}
+        `}
+        {...props}
+      />
 
       {error && (
-        <p className="text-red-600 text-sm font-medium flex items-center">
-          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+        <p className="text-sm text-error mt-1 flex items-center">
+          <svg className="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
           </svg>
           {error}
@@ -108,81 +121,173 @@ export const FormField = ({
   );
 };
 
-// Modern Select Component
-export const Select = ({ options = [], placeholder, className = '', ...props }) => {
-  return (
-    <select
-      className={`
-        w-full px-4 py-3 rounded-lg border-2 transition-all duration-200
-        bg-white text-black
-        border-neutral/30 focus:border-secondary focus:ring-4 focus:ring-secondary/20
-        hover:border-accent cursor-pointer
-        ${className}
-      `}
-      {...props}
-    >
-      {placeholder && (
-        <option value="" disabled>
-          {placeholder}
-        </option>
-      )}
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
-  );
-};
-
-// Modern Textarea Component
-export const Textarea = ({ className = '', ...props }) => {
-  return (
-    <textarea
-      className={`
-        w-full px-4 py-3 rounded-lg border-2 transition-all duration-200
-        bg-white text-black placeholder-gray-500
-        border-neutral/30 focus:border-secondary focus:ring-4 focus:ring-secondary/20
-        hover:border-accent resize-vertical min-h-[100px]
-        ${className}
-      `}
-      {...props}
-    />
-  );
-};
-
 // Modern Badge Component
-export const Badge = ({ children, variant = 'default', className = '' }) => {
+export const Badge = ({ children, variant = 'default', size = 'medium', className = '' }) => {
   const variants = {
-    default: 'bg-neutral text-white',
-    primary: 'bg-primary text-white',
-    secondary: 'bg-secondary text-white',
-    success: 'bg-green-500 text-white',
-    warning: 'bg-yellow-500 text-white',
-    danger: 'bg-red-500 text-white',
+    default: 'bg-gray-100 text-gray-800',
+    primary: 'bg-blue-100 text-primary',
+    secondary: 'bg-purple-100 text-secondary',
+    success: 'bg-green-100 text-success',
+    warning: 'bg-yellow-100 text-warning',
+    danger: 'bg-red-100 text-error'
+  };
+
+  const sizes = {
+    small: 'px-2 py-1 text-xs',
+    medium: 'px-3 py-1 text-sm',
+    large: 'px-4 py-2 text-base'
   };
 
   return (
-    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${variants[variant]} ${className}`}>
+    <span className={`inline-flex items-center font-medium rounded-full ${variants[variant]} ${sizes[size]} ${className}`}>
       {children}
     </span>
   );
 };
 
-// Loading Spinner Component
+// Modern Loading Spinner Component
 export const LoadingSpinner = ({ size = 'medium', className = '' }) => {
   const sizes = {
-    small: 'w-4 h-4',
-    medium: 'w-8 h-8',
-    large: 'w-12 h-12'
+    small: 'h-4 w-4',
+    medium: 'h-8 w-8',
+    large: 'h-12 w-12'
   };
 
   return (
-    <div className={`${sizes[size]} ${className}`}>
-      <svg className="animate-spin text-secondary" fill="none" viewBox="0 0 24 24">
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
+    <div className={`animate-spin rounded-full border-b-2 border-primary ${sizes[size]} ${className}`} />
+  );
+};
+
+// Modern Select Component
+export const Select = ({
+  label,
+  value,
+  onChange,
+  options = [],
+  error,
+  required = false,
+  placeholder = 'Selecteer...',
+  disabled = false,
+  className = '',
+  ...props
+}) => {
+  const selectId = label?.toLowerCase().replace(/\s+/g, '-') || 'select';
+
+  return (
+    <div className={`space-y-2 ${className}`}>
+      {label && (
+        <label
+          htmlFor={selectId}
+          className="block text-sm font-medium text-text-dark"
+        >
+          {label}
+          {required && <span className="text-error ml-1">*</span>}
+        </label>
+      )}
+
+      <select
+        id={selectId}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+        required={required}
+        className={`
+          w-full px-4 py-3 
+          border rounded-lg
+          focus:outline-none focus:ring-2 focus:border-transparent
+          disabled:opacity-50 disabled:cursor-not-allowed
+          transition-all duration-200
+          ${error 
+            ? 'border-error focus:ring-error' 
+            : 'border-border focus:ring-primary'
+          }
+          ${disabled ? 'bg-gray-50' : 'bg-surface'}
+        `}
+        {...props}
+      >
+        {placeholder && (
+          <option value="" disabled>
+            {placeholder}
+          </option>
+        )}
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+
+      {error && (
+        <p className="text-sm text-error mt-1 flex items-center">
+          <svg className="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+          {error}
+        </p>
+      )}
+    </div>
+  );
+};
+
+// Modern Textarea Component
+export const Textarea = ({
+  label,
+  value,
+  onChange,
+  error,
+  required = false,
+  placeholder,
+  disabled = false,
+  rows = 3,
+  className = '',
+  ...props
+}) => {
+  const textareaId = label?.toLowerCase().replace(/\s+/g, '-') || 'textarea';
+
+  return (
+    <div className={`space-y-2 ${className}`}>
+      {label && (
+        <label
+          htmlFor={textareaId}
+          className="block text-sm font-medium text-text-dark"
+        >
+          {label}
+          {required && <span className="text-error ml-1">*</span>}
+        </label>
+      )}
+
+      <textarea
+        id={textareaId}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        disabled={disabled}
+        required={required}
+        rows={rows}
+        className={`
+          w-full px-4 py-3 
+          border rounded-lg
+          focus:outline-none focus:ring-2 focus:border-transparent
+          disabled:opacity-50 disabled:cursor-not-allowed
+          transition-all duration-200
+          resize-vertical
+          ${error 
+            ? 'border-error focus:ring-error' 
+            : 'border-border focus:ring-primary'
+          }
+          ${disabled ? 'bg-gray-50' : 'bg-surface'}
+        `}
+        {...props}
+      />
+
+      {error && (
+        <p className="text-sm text-error mt-1 flex items-center">
+          <svg className="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+          {error}
+        </p>
+      )}
     </div>
   );
 };
