@@ -1,4 +1,4 @@
-// Modern Modal Components for QuizKeeper with beautiful styling
+// Modern Modal Components for QuizBeheer with beautiful styling
 import React from 'react';
 import { Button } from './FormComponents';
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authHelpers } from '../db/supabaseService';
+import Orb from '../components/Orb';
 
 function LoginPage() {
   const [username, setUsername] = useState('');
@@ -25,11 +26,21 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-blue-50 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-surface border border-border rounded-xl shadow-xl p-8">
+    <div className="min-h-screen bg-white relative flex items-center justify-center px-4 page-transition">
+      {/* Background Orb Animation */}
+      <div className="fixed inset-0 z-0">
+        <Orb
+          hoverIntensity={0.5}
+          rotateOnHover={true}
+          hue={0}
+          forceHoverState={false}
+        />
+      </div>
+
+      <div className="max-w-md w-full bg-white/70 backdrop-blur-sm border border-white/30 rounded-xl shadow-2xl p-8 relative z-10 card-transition">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
-            <img src="/favicon.ico" alt="QuizBeheer" className="w-12 h-12 mr-3" />
+            <img src="/favicon.ico" alt="QuizBeheer" className="w-12 h-12 mr-3 filter brightness-110" />
             <h1 className="text-2xl font-bold text-primary">QuizBeheer</h1>
           </div>
           <h2 className="text-3xl font-bold text-text-dark mb-2">Inloggen</h2>
@@ -46,7 +57,7 @@ function LoginPage() {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-colors"
+              className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-colors bg-white/90 backdrop-blur-sm"
               required
             />
           </div>
@@ -60,13 +71,13 @@ function LoginPage() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-colors"
+              className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-colors bg-white/90 backdrop-blur-sm"
               required
             />
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <div className="bg-red-50/95 backdrop-blur-sm border border-red-200 text-red-700 px-4 py-3 rounded-lg">
               {error}
             </div>
           )}
@@ -74,7 +85,7 @@ function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+            className="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium shadow-lg"
           >
             {loading ? 'Bezig met inloggen...' : 'Inloggen'}
           </button>
