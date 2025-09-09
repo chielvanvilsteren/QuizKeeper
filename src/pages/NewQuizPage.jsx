@@ -1,4 +1,4 @@
-// Modern New Quiz Page for QuizKeeper
+// Modern New Quiz Page for QuizBeheer
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { dbHelpers } from '../db/database';
@@ -76,10 +76,12 @@ export const NewQuizPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4">
-              <Link to="/dashboard" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-                <img src="/favicon.ico" alt="QuizKeeper" className="w-10 h-10" />
+              <Link to="/dashboard" className="flex items-center space-x-4 hover:opacity-80 transition-opacity">
+                <div className="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
+                  <img src="/favicon.ico" alt="QuizBeheer" className="w-14 h-14" />
+                </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-primary">QuizKeeper</h1>
+                  <h1 className="text-3xl font-bold text-primary">QuizBeheer</h1>
                   <p className="text-neutral">Nieuwe Quiz</p>
                 </div>
               </Link>

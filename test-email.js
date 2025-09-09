@@ -11,12 +11,12 @@ function testEmailJS() {
     'service_j5qmf84',  // Your service ID
     'template_kot9cu5', // Your template ID
     {
-      to_email: 'your-email@example.com', // Replace with your email
+      to_email: 'test@example.com', // Replace with your email
       to_name: 'Test User',
-      from_name: 'QuizKeeper Test',
-      subject: 'Test Email from QuizKeeper',
-      message: 'This is a test email to verify EmailJS is working correctly.',
-      reply_to: 'test@quizkeeper.app'
+      from_name: 'QuizBeheer Team',
+      subject: 'Test Email',
+      message: 'This is a test email from QuizBeheer',
+      reply_to: 'test@quizbeheer.app'
     }
   ).then(
     (response) => {

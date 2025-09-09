@@ -48,7 +48,7 @@ CREATE TABLE users (
 
 -- Insert admin user (password will be checked via environment variable)
 INSERT INTO users (username, email, password_hash, role) VALUES
-('admin', 'admin@quizkeeper.com', 'unused', 'admin');
+('admin', 'admin@quizbeheer.com', 'unused', 'admin');
 
 -- Add user_id to existing quizzes (for migration)
 -- This will set all existing quizzes to the admin user

@@ -60,8 +60,8 @@ function ActivationPage() {
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center justify-center mb-4">
-              <img src="/favicon.ico" alt="QuizKeeper" className="w-12 h-12 mr-3" />
-              <h1 className="text-2xl font-bold text-[#714329]">QuizKeeper</h1>
+              <img src="/favicon.ico" alt="QuizBeheer" className="w-12 h-12 mr-3" />
+              <h1 className="text-2xl font-bold text-[#714329]">QuizBeheer</h1>
             </div>
             <h2 className="text-xl font-semibold text-[#714329]">Account Activatie</h2>
           </div>

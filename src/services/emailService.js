@@ -29,14 +29,14 @@ class EmailService {
       const templateParams = {
         to_email: userEmail,
         to_name: username,
-        from_name: 'QuizKeeper Team',
-        subject: 'Welkom bij QuizKeeper! 🎯',
+        from_name: 'QuizBeheer Team',
+        subject: 'Welkom bij QuizBeheer! 🎯',
         message: `
 Hallo ${username},
 
-Welkom bij QuizKeeper! Je account is succesvol aangemaakt en je kunt nu beginnen met het organiseren van geweldige pubquizzen.
+Welkom bij QuizBeheer! Je account is succesvol aangemaakt en je kunt nu beginnen met het organiseren van geweldige pubquizzen.
 
-Wat kun je allemaal doen met QuizKeeper:
+Wat kun je allemaal doen met QuizBeheer:
 🎯 Maak en beheer pubquizzen
 👥 Organiseer teams en scores
 📊 Houd real-time bij wie er wint
@@ -47,9 +47,12 @@ Ga naar de applicatie en log in om te beginnen!
 Veel plezier met het organiseren van onvergetelijke quiz-avonden!
 
 Met vriendelijke groet,
-Het QuizKeeper Team
+Het QuizBeheer Team
+
+---
+Dit is een automatisch gegenereerd bericht. Heb je vragen? Neem contact met ons op.
         `.trim(),
-        reply_to: 'noreply@quizkeeper.app'
+        reply_to: 'noreply@quizbeheer.app'
       };
 
       const response = await emailjs.send(
@@ -80,12 +83,12 @@ Het QuizKeeper Team
       const templateParams = {
         to_email: userEmail,
         to_name: username,
-        from_name: 'QuizKeeper Team',
-        subject: 'Wachtwoord Herstellen - QuizKeeper',
+        from_name: 'QuizBeheer Team',
+        subject: 'Wachtwoord Herstellen - QuizBeheer',
         message: `
 Hallo ${username},
 
-Je hebt een verzoek ingediend om je wachtwoord te herstellen voor je QuizKeeper account.
+Je hebt een verzoek ingediend om je wachtwoord te herstellen voor je QuizBeheer account.
 
 Klik op de onderstaande link om je wachtwoord te wijzigen:
 ${resetLink}
@@ -95,9 +98,9 @@ Deze link is 24 uur geldig.
 Heb je dit verzoek niet ingediend? Dan kun je deze email negeren.
 
 Met vriendelijke groet,
-Het QuizKeeper Team
+Het QuizBeheer Team
         `.trim(),
-        reply_to: 'noreply@quizkeeper.app'
+        reply_to: 'noreply@quizbeheer.app'
       };
 
       const response = await emailjs.send(
@@ -122,7 +125,7 @@ Het QuizKeeper Team
     try {
       const templateParams = {
         to_email: userEmail,
-        from_name: 'QuizKeeper',
+        from_name: 'QuizBeheer',
         subject: `Uitnodiging voor pubquiz: ${quizName}`,
         message: `
 Je bent uitgenodigd voor een pubquiz!
@@ -131,11 +134,11 @@ Quiz: ${quizName}
 Datum: ${quizDate}
 Locatie: ${location}
 
-Meld je aan via QuizKeeper en laat zien wat je kunt!
+Meld je aan via QuizBeheer en laat zien wat je kunt!
 
 Veel succes!
         `.trim(),
-        reply_to: 'noreply@quizkeeper.app'
+        reply_to: 'noreply@quizbeheer.app'
       };
 
       const response = await emailjs.send(
@@ -162,12 +165,12 @@ Veel succes!
       const templateParams = {
         to_email: userEmail,
         to_name: username,
-        from_name: 'QuizKeeper Team',
-        subject: 'Activeer je QuizKeeper account! 🔓',
+        from_name: 'QuizBeheer Team',
+        subject: 'Activeer je QuizBeheer account! 🔓',
         message: `
 Hallo ${username},
 
-Welkom bij QuizKeeper! Om je account te kunnen gebruiken, moet je eerst je email adres bevestigen.
+Welkom bij QuizBeheer! Om je account te kunnen gebruiken, moet je eerst je email adres bevestigen.
 
 Klik op de onderstaande link om je account te activeren:
 ${activationLink}
@@ -183,9 +186,9 @@ Na activatie kun je:
 Heb je deze registratie niet aangevraagd? Dan kun je deze email negeren.
 
 Met vriendelijke groet,
-Het QuizKeeper Team
+Het QuizBeheer Team
         `.trim(),
-        reply_to: 'noreply@quizkeeper.app',
+        reply_to: 'noreply@quizbeheer.app',
         activation_link: activationLink
       };
 

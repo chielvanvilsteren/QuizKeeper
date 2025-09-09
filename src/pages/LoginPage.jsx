@@ -29,11 +29,11 @@ function LoginPage() {
       <div className="max-w-md w-full bg-surface border border-border rounded-xl shadow-xl p-8">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
-            <img src="/favicon.ico" alt="QuizKeeper" className="w-10 h-10 mr-3" />
-            <h1 className="text-2xl font-bold text-primary">QuizKeeper</h1>
+            <img src="/favicon.ico" alt="QuizBeheer" className="w-12 h-12 mr-3" />
+            <h1 className="text-2xl font-bold text-primary">QuizBeheer</h1>
           </div>
           <h2 className="text-3xl font-bold text-text-dark mb-2">Inloggen</h2>
-          <p className="text-neutral">Log in om toegang te krijgen tot QuizKeeper</p>
+          <p className="text-neutral">Log in om toegang te krijgen tot QuizBeheer</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

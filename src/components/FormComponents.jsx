@@ -1,4 +1,4 @@
-// Modern Form Components for QuizKeeper with custom styling
+// Modern Form Components for QuizBeheer with custom styling
 import React from 'react';
 
 // Modern Card Component

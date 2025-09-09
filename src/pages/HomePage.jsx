@@ -1,4 +1,4 @@
-// Modern HomePage for QuizKeeper with hero section and dashboard layout
+// Modern HomePage for QuizBeheer with hero section and dashboard layout
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DeleteConfirmationModal } from '../components/Modal';
@@ -79,9 +79,11 @@ export const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4">
-              <img src="/favicon.ico" alt="QuizKeeper" className="w-10 h-10" />
+              <div className="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
+                <img src="/favicon.ico" alt="QuizBeheer" className="w-14 h-14" />
+              </div>
               <div>
-                <h1 className="text-3xl font-bold text-primary">QuizKeeper</h1>
+                <h1 className="text-3xl font-bold text-primary">QuizBeheer</h1>
                 <p className="text-neutral">Dashboard</p>
               </div>
             </div>

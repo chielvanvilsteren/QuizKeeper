@@ -10,8 +10,8 @@ function IntroPage() {
       <header className="bg-primary text-white py-6 shadow-lg">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <img src="/favicon.ico" alt="QuizKeeper" className="w-8 h-8" />
-            <h1 className="text-2xl font-bold">QuizKeeper</h1>
+            <img src="/favicon.ico" alt="QuizBeheer" className="w-8 h-8" />
+            <h1 className="text-2xl font-bold">QuizBeheer</h1>
           </div>
           <div className="flex items-center space-x-3">
             <button
@@ -34,7 +34,7 @@ function IntroPage() {
       <section className="py-20 bg-gradient-to-br from-background to-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-5xl font-bold text-text-dark mb-6">
-            Welkom bij QuizKeeper
+            Welkom bij QuizBeheer
           </h2>
           <p className="text-xl text-neutral mb-8 max-w-2xl mx-auto">
             De ultieme tool voor het organiseren en beheren van pubquizzen.
@@ -53,7 +53,7 @@ function IntroPage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h3 className="text-3xl font-bold text-text-dark text-center mb-12">
-            Waarom QuizKeeper?
+            Waarom QuizBeheer?
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-surface border border-border rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
@@ -105,7 +105,7 @@ function IntroPage() {
       <footer className="bg-text-dark text-white py-8">
         <div className="container mx-auto px-4 text-center">
           <p className="text-gray-400">
-            © 2025 QuizKeeper. Gemaakt voor de beste pubquiz ervaring.
+            © 2025 QuizBeheer. Gemaakt voor de beste pubquiz ervaring.
           </p>
         </div>
       </footer>

@@ -57,10 +57,10 @@ function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4">
-              <img src="/favicon.ico" alt="QuizKeeper" className="w-10 h-10" />
+              <img src="/favicon.ico" alt="QuizBeheer" className="w-12 h-12" />
               <div>
-                <h1 className="text-3xl font-bold text-primary">QuizKeeper Admin</h1>
-                <p className="text-neutral">Administrator Dashboard</p>
+                <h1 className="text-3xl font-bold text-primary">QuizBeheer Admin</h1>
+                <p className="text-neutral">Systeem Overzicht</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -164,7 +164,7 @@ function AdminDashboard() {
         <div className="bg-surface border border-border rounded-xl shadow-sm">
           <div className="p-6 border-b border-border">
             <h3 className="text-xl font-semibold text-text-dark">Platform Overzicht</h3>
-            <p className="text-neutral mt-1">Gedetailleerde statistieken van het QuizKeeper platform</p>
+            <p className="text-neutral mt-1">Gedetailleerde statistieken van het QuizBeheer platform</p>
           </div>
           <div className="p-6">
             <div className="space-y-4">

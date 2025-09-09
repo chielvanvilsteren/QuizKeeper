@@ -1,4 +1,4 @@
-// Main App Component for QuizKeeper with authentication and modern styling
+// Main App Component for QuizBeheer with authentication and modern styling
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
