@@ -38,7 +38,7 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
 
             {/* Nieuwe quiz aanmaken - requires authentication */}
-            <Route path="/new" element={<NewQuizPage />} />
+            <Route path="/quiz/new" element={<NewQuizPage />} />
 
             {/* Teams beheren voor een specifieke quiz - requires authentication */}
             <Route path="/quiz/:quizId/teams" element={<TeamsPage />} />
