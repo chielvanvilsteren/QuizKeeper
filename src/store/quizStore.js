@@ -96,14 +96,6 @@ export const useQuizStore = create((set, get) => ({
   saveCurrentScore: async (points) => {
     const { currentQuiz, teams, currentRound, currentTeamIndex } = get();
 
-    console.log('saveCurrentScore called with:', {
-      points,
-      currentQuiz: currentQuiz?.id,
-      currentRound,
-      currentTeamIndex,
-      team: teams[currentTeamIndex]?.id
-    });
-
     if (!currentQuiz) {
       throw new Error('Geen actieve quiz gevonden');
     }
@@ -118,15 +110,12 @@ export const useQuizStore = create((set, get) => ({
 
     try {
       const team = teams[currentTeamIndex];
-      console.log('Saving score for team:', team);
 
       await dbHelpers.saveScore(currentQuiz.id, team.id, currentRound, points);
-      console.log('Score saved successfully');
 
       // Reload scores to update state
       const scores = await dbHelpers.getScoresByQuiz(currentQuiz.id);
       set({ scores });
-      console.log('Scores reloaded:', scores.length);
 
     } catch (error) {
       console.error('Error in saveCurrentScore:', error);

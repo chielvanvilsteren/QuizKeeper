@@ -96,7 +96,7 @@ export const TeamsPage = () => {
         <div className="flex items-center justify-center py-20">
           <div className="text-center">
             <LoadingSpinner size="large" />
-            <p className="text-neutral mt-4 text-lg">Quiz gegevens laden...</p>
+            <p className="text-black mt-4 text-lg">Quiz gegevens laden...</p>
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@ export const TeamsPage = () => {
       {/* Quiz Header Section */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <Card className="bg-white border-l-4 border-l-secondary">
+          <Card className="bg-[#D0B9A7] border-2 border-black border-l-4 border-l-secondary">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
@@ -139,7 +139,7 @@ export const TeamsPage = () => {
                 </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm mt-4">
-                  <div className="flex items-center text-neutral">
+                  <div className="flex items-center text-black">
                     <span className="text-secondary mr-2">📅</span>
                     {new Date(currentQuiz.date).toLocaleDateString('nl-NL', {
                       weekday: 'short',
@@ -147,15 +147,15 @@ export const TeamsPage = () => {
                       day: 'numeric'
                     })}
                   </div>
-                  <div className="flex items-center text-neutral">
+                  <div className="flex items-center text-black">
                     <span className="text-secondary mr-2">📍</span>
                     {currentQuiz.location}
                   </div>
-                  <div className="flex items-center text-neutral">
+                  <div className="flex items-center text-black">
                     <span className="text-secondary mr-2">🎯</span>
                     {currentQuiz.rounds} rondes
                   </div>
-                  <div className="flex items-center text-neutral">
+                  <div className="flex items-center text-black">
                     <span className="text-secondary mr-2">👥</span>
                     {teams.length} teams
                   </div>
@@ -239,7 +239,7 @@ export const TeamsPage = () => {
                   <div className="w-full border-t border-neutral/30" />
                 </div>
                 <div className="relative flex justify-center">
-                  <span className="px-4 bg-background text-neutral font-medium">OF</span>
+                  <span className="px-4 bg-background text-black font-medium">OF</span>
                 </div>
               </div>
 
@@ -327,10 +327,10 @@ const EmptyTeamsState = () => (
       <span className="text-3xl">👥</span>
     </div>
     <h3 className="text-xl font-bold text-primary mb-4">Nog geen teams</h3>
-    <p className="text-neutral mb-6 max-w-sm mx-auto">
+    <p className="text-black mb-6 max-w-sm mx-auto">
       Voeg teams toe om de quiz te kunnen starten. Je kunt dit handmatig doen of via Excel import.
     </p>
-    <div className="text-sm text-neutral/80">
+    <div className="text-sm text-black">
       💡 Tip: De meeste pubquizzen hebben 8-12 teams
     </div>
   </div>
@@ -338,7 +338,7 @@ const EmptyTeamsState = () => (
 
 // Team Card Component
 const TeamCard = ({ team, index }) => (
-  <div className="bg-white rounded-xl p-4 border border-neutral/20 hover:shadow-md transition-all duration-200 animate-slide-up"
+  <div className="bg-[#D0B9A7] border-2 border-black rounded-xl p-4 hover:shadow-md transition-all duration-200 animate-slide-up"
        style={{ animationDelay: `${index * 50}ms` }}>
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-4">

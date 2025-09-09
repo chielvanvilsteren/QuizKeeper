@@ -1,9 +1,10 @@
 // Modern New Quiz Page for QuizKeeper
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FormField, Button, Card } from '../components/FormComponents';
 import { Header } from '../components/Header';
 import { dbHelpers } from '../db/database';
+import { authHelpers } from '../db/supabaseService';
 
 export const NewQuizPage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,22 @@ export const NewQuizPage = () => {
   });
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    // Check if user is authenticated
+    if (!authHelpers.isAuthenticated()) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  // Show loading while checking authentication
+  if (!authHelpers.isAuthenticated()) {
+    return (
+      <div className="min-h-screen bg-[#D0B9A7] flex items-center justify-center">
+        <div className="text-[#714329] text-xl">Authenticatie controleren...</div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -128,7 +145,7 @@ export const NewQuizPage = () => {
               </div>
 
               {/* Preview Card */}
-              <div className="bg-white rounded-xl border border-neutral/20 p-6">
+              <div className="bg-[#D0B9A7] border-2 border-black rounded-xl border border-neutral/20 p-6">
                 <h3 className="text-lg font-bold text-primary mb-4 flex items-center">
                   👀 Preview van je Quiz
                 </h3>

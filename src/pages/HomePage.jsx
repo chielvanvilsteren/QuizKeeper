@@ -1,20 +1,28 @@
 // Modern HomePage for QuizKeeper with hero section and dashboard layout
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Card, LoadingSpinner, Badge } from '../components/FormComponents';
-import { Header } from '../components/Header';
+import { Link, useNavigate } from 'react-router-dom';
 import { DeleteConfirmationModal } from '../components/Modal';
 import { dbHelpers } from '../db/database';
+import { authHelpers } from '../db/supabaseService';
 
 export const HomePage = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, quiz: null });
   const [deleting, setDeleting] = useState(false);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Check if user is authenticated
+    const currentUser = authHelpers.getCurrentUser();
+    if (!currentUser) {
+      navigate('/login');
+      return;
+    }
+    setUser(currentUser);
     loadQuizzes();
-  }, []);
+  }, [navigate]);
 
   const loadQuizzes = async () => {
     try {
@@ -48,30 +56,68 @@ export const HomePage = () => {
     }
   };
 
+  const handleLogout = () => {
+    authHelpers.logout();
+    navigate('/');
+  };
+
+  // Show loading while checking authentication
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-[#D0B9A7] flex items-center justify-center">
+        <div className="text-[#714329] text-xl">Authenticatie controleren...</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-neutral/20">
-      <Header />
-      
+    <div className="min-h-screen bg-[#D0B9A7]">
+      {/* Header with authentication */}
+      <header className="bg-[#714329] text-white py-6">
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <div className="flex items-center space-x-3">
+            <img src="/favicon.ico" alt="QuizKeeper" className="w-8 h-8" />
+            <h1 className="text-2xl font-bold text-white">QuizKeeper</h1>
+          </div>
+          <div className="flex items-center space-x-4">
+            <span className="text-white">Welkom, {user.username}</span>
+            {user.role === 'admin' && (
+              <button
+                onClick={() => navigate('/admin')}
+                className="text-white hover:text-[#D0B9A7] transition-colors"
+              >
+                Admin Panel
+              </button>
+            )}
+            <button
+              onClick={handleLogout}
+              className="bg-[#B08463] text-white px-4 py-2 rounded-lg hover:bg-[#B9937B] transition-colors"
+            >
+              Uitloggen
+            </button>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 bg-primary/5"></div>
         <div className="relative max-w-7xl mx-auto text-center">
-          <div className="animate-bounce-subtle">
-            <h1 className="text-5xl md:text-7xl font-bold text-primary mb-6">
-              Quiz<span className="text-secondary">Keeper</span>
+          <div>
+            <h1 className="text-5xl md:text-7xl font-bold text-[#714329] mb-6">
+              Quiz<span className="text-[#B08463]">Keeper</span>
             </h1>
-            <p className="text-xl md:text-2xl text-black mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-[#714329] mb-8 max-w-3xl mx-auto">
               De slimste en meest intuïtieve pubquiz app voor onvergetelijke avonden vol plezier
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/new">
-              <Button size="large" className="min-w-[200px]">
+              <button className="bg-[#B08463] text-white px-8 py-3 rounded-lg text-lg hover:bg-[#B9937B] transition-colors">
                 🎯 Nieuwe Quiz Starten
-              </Button>
+              </button>
             </Link>
-            <div className="text-black text-sm">
+            <div className="text-[#714329] text-sm">
               {quizzes.length > 0 && `${quizzes.length} quiz${quizzes.length !== 1 ? 'zes' : ''} beschikbaar`}
             </div>
           </div>
@@ -82,28 +128,26 @@ export const HomePage = () => {
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Quiz List */}
-          <Card title="🎯 Jouw Quizzen" className="animate-fade-in">
+          <div className="bg-[#D0B9A7] border-2 border-black rounded-lg p-6 shadow-lg">
+            <h2 className="text-2xl font-bold text-[#714329] mb-6">🎯 Jouw Quizzen</h2>
             {loading ? (
               <div className="flex justify-center items-center py-12">
-                <LoadingSpinner size="large" />
-                <span className="ml-3 text-neutral">Quizzen laden...</span>
+                <div className="text-[#714329]">Quizzen laden...</div>
               </div>
             ) : quizzes.length === 0 ? (
               <EmptyState />
             ) : (
               <div className="grid gap-4">
-                {quizzes.map((quiz, index) => (
-                  <QuizCard 
+                {quizzes.map((quiz) => (
+                  <QuizCard
                     key={quiz.id} 
                     quiz={quiz} 
                     onDelete={handleDeleteQuiz}
-                    style={{ animationDelay: `${index * 100}ms` }}
-                    className="animate-slide-up"
                   />
                 ))}
               </div>
             )}
-          </Card>
+          </div>
         </div>
       </section>
 
@@ -120,25 +164,26 @@ export const HomePage = () => {
 };
 
 // Quiz Card Component
-const QuizCard = ({ quiz, onDelete, className, style }) => {
+const QuizCard = ({ quiz, onDelete }) => {
   const isUpcoming = new Date(quiz.date) > new Date();
   const isPast = new Date(quiz.date) < new Date();
 
   return (
-    <div 
-      className={`bg-background/80 rounded-xl p-6 border-2 border-black hover:shadow-lg hover:bg-background transition-all duration-200 ${className}`}
-      style={style}
-    >
+    <div className="bg-[#D0B9A7] rounded-xl p-6 border border-[#714329] hover:shadow-lg transition-all duration-200">
       <div className="flex items-center justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
-            <h3 className="text-xl font-bold text-primary">{quiz.name}</h3>
-            <Badge variant={isUpcoming ? 'warning' : isPast ? 'default' : 'success'}>
+            <h3 className="text-xl font-bold text-[#714329]">{quiz.name}</h3>
+            <span className={`px-2 py-1 rounded text-sm font-medium ${
+              isUpcoming ? 'bg-yellow-200 text-yellow-800' : 
+              isPast ? 'bg-gray-200 text-gray-800' : 
+              'bg-green-200 text-green-800'
+            }`}>
               {isUpcoming ? 'Aankomend' : isPast ? 'Afgelopen' : 'Actief'}
-            </Badge>
+            </span>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-black">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-[#714329]">
             <div className="flex items-center">
               <span className="mr-2">📅</span>
               {new Date(quiz.date).toLocaleDateString('nl-NL')}
@@ -160,14 +205,14 @@ const QuizCard = ({ quiz, onDelete, className, style }) => {
 
         <div className="flex items-center space-x-2 ml-4">
           <Link to={`/quiz/${quiz.id}/teams`}>
-            <Button size="small" variant="outline">
+            <button className="bg-[#B5A192] text-white px-3 py-1 rounded hover:bg-[#B08463] transition-colors text-sm">
               👥 Teams
-            </Button>
+            </button>
           </Link>
           <Link to={`/quiz/${quiz.id}/start`}>
-            <Button size="small">
+            <button className="bg-[#B08463] text-white px-3 py-1 rounded hover:bg-[#B9937B] transition-colors text-sm">
               🚀 Start
-            </Button>
+            </button>
           </Link>
           <button
             onClick={() => onDelete(quiz)}
@@ -187,19 +232,19 @@ const QuizCard = ({ quiz, onDelete, className, style }) => {
 // Empty State Component
 const EmptyState = () => (
   <div className="text-center py-12">
-    <div className="w-24 h-24 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-      <span className="text-4xl">🎯</span>
+    <div className="w-24 h-24 bg-[#B08463] rounded-full flex items-center justify-center mx-auto mb-6">
+      <span className="text-4xl text-white">🎯</span>
     </div>
-    <h3 className="text-2xl font-bold text-primary mb-4">
+    <h3 className="text-2xl font-bold text-[#714329] mb-4">
       Nog geen quizzen aangemaakt
     </h3>
-    <p className="text-neutral mb-8 max-w-md mx-auto">
+    <p className="text-[#B5A192] mb-8 max-w-md mx-auto">
       Begin met het maken van je eerste pubquiz en creëer onvergetelijke avonden vol plezier en competitie.
     </p>
     <Link to="/new">
-      <Button size="large">
+      <button className="bg-[#B08463] text-white px-8 py-3 rounded-lg text-lg hover:bg-[#B9937B] transition-colors">
         🎯 Maak je eerste quiz
-      </Button>
+      </button>
     </Link>
   </div>
 );

@@ -5,10 +5,13 @@ import { FormField, Button, Card } from '../components/FormComponents';
 import { Modal, ScoreTable, QuizCompletionModal, DetailedResultsTable, RoundManagementModal, NextRoundConfirmationModal, RoundEditTable } from '../components/Modal';
 import { useQuizStore } from '../store/quizStore';
 import { dbHelpers } from '../db/database';
+import { useModalContext } from '../components/ModalProvider';
 
 export const QuizStartPage = () => {
   const { quizId } = useParams();
   const navigate = useNavigate();
+  const { showConfirm } = useModalContext();
+
   const {
     currentQuiz,
     teams,
@@ -157,8 +160,14 @@ export const QuizStartPage = () => {
     setPoints('');
   };
 
-  const handleExitQuiz = () => {
-    if (window.confirm('Weet je zeker dat je de quiz wilt verlaten? Je voortgang wordt bewaard.')) {
+  const handleExitQuiz = async () => {
+    const confirmed = await showConfirm(
+      'Weet je zeker dat je de quiz wilt verlaten? Je voortgang wordt bewaard.',
+      'Quiz verlaten',
+      'warning'
+    );
+
+    if (confirmed) {
       exitQuiz();
       navigate('/');
     }
@@ -184,8 +193,10 @@ export const QuizStartPage = () => {
       const hasScore = await hasTeamScoreForRound(selectedTeam.id);
 
       if (hasScore) {
-        const confirmed = window.confirm(
-          `Team ${selectedTeam.teamNumber} (${selectedTeam.name}) heeft al een score voor ronde ${currentRound}.\n\nWil je de bestaande score overschrijven?`
+        const confirmed = await showConfirm(
+          `Team ${selectedTeam.teamNumber} (${selectedTeam.name}) heeft al een score voor ronde ${currentRound}.\n\nWil je de bestaande score overschrijven?`,
+          'Score overschrijven',
+          'warning'
         );
 
         if (!confirmed) {
@@ -215,8 +226,10 @@ export const QuizStartPage = () => {
           setShowQuizCompleteModal(true);
         } else {
           // Round is complete, ask to proceed to next round
-          const confirmed = window.confirm(
-            `Ronde ${currentRound} is voltooid! Alle teams hebben punten.\n\nWil je doorgaan naar ronde ${currentRound + 1}?`
+          const confirmed = await showConfirm(
+            `Ronde ${currentRound} is voltooid! Alle teams hebben punten.\n\nWil je doorgaan naar ronde ${currentRound + 1}?`,
+            'Volgende ronde',
+            'question'
           );
 
           if (confirmed) {
@@ -263,8 +276,10 @@ export const QuizStartPage = () => {
       const hasScore = await hasTeamScoreForRound(team.id);
 
       if (hasScore) {
-        const confirmed = window.confirm(
-          `Team ${team.teamNumber} (${team.name}) heeft al een score voor ronde ${currentRound}.\n\nWil je de bestaande score overschrijven?`
+        const confirmed = await showConfirm(
+          `Team ${team.teamNumber} (${team.name}) heeft al een score voor ronde ${currentRound}.\n\nWil je de bestaande score overschrijven?`,
+          'Score overschrijven',
+          'warning'
         );
 
         if (!confirmed) {
@@ -711,7 +726,7 @@ export const QuizStartPage = () => {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">OF</span>
+                <span className="px-2 bg-[#D0B9A7] border border-black text-black">OF</span>
               </div>
             </div>
 
@@ -755,7 +770,7 @@ export const QuizStartPage = () => {
                         className={`p-3 rounded-lg border-2 transition-all ${
                           hasScore 
                             ? 'border-green-300 bg-green-50 hover:bg-green-100' 
-                            : 'border-gray-300 bg-white hover:bg-gray-50'
+                            : 'border-gray-300 bg-[#D0B9A7] border border-black hover:bg-gray-50'
                         } hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500`}
                       >
                         <div className="flex items-center space-x-2">

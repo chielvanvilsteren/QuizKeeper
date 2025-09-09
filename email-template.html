@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{subject}}</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #714329;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        .header {
+            background-color: #714329;
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .logo .accent {
+            color: #B08463;
+        }
+
+        .tagline {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Content */
+        .content {
+            padding: 40px 30px;
+            background-color: #D0B9A7;
+        }
+
+        .greeting {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #714329;
+        }
+
+        .message {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #714329;
+        }
+
+        .features {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .features h3 {
+            color: #714329;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #B5A192;
+            color: #714329;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: "🎯 ";
+            margin-right: 8px;
+        }
+
+        /* CTA Button */
+        .cta {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #B08463;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #B9937B;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #714329;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .footer .small {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 20px;
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .header,
+            .content,
+            .footer {
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                Quiz<span class="accent">Keeper</span>
+            </div>
+            <div class="tagline">
+                De ultieme pubquiz app
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="greeting">
+                Hallo {{to_name}},
+            </div>
+
+            <div class="message">
+                {{message}}
+            </div>
+
+            <!-- Optional activation link (only shown for activation emails) -->
+            {{#activation_link}}
+            <div class="cta">
+                <a href="{{activation_link}}" class="cta-button">
+                    🔓 Account Activeren
+                </a>
+            </div>
+            {{/activation_link}}
+
+            <!-- Optional features section (only shown for welcome emails) -->
+            {{#show_features}}
+            <div class="features">
+                <h3>Wat kun je allemaal doen met QuizKeeper:</h3>
+                <ul class="feature-list">
+                    <li>Maak en beheer professionele pubquizzen</li>
+                    <li>Organiseer teams en beheer deelnemers</li>
+                    <li>Houd real-time scores bij tijdens de quiz</li>
+                    <li>Genereer automatisch eindstanden en resultaten</li>
+                    <li>Deel resultaten met alle deelnemers</li>
+                </ul>
+            </div>
+
+            <div class="cta">
+                <a href="https://your-quizkeeper-domain.com/login" class="cta-button">
+                    🚀 Begin nu met je eerste quiz
+                </a>
+            </div>
+            {{/show_features}}
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                <strong>QuizKeeper</strong> - De slimste pubquiz app
+            </p>
+            <p>
+                Heb je vragen? Neem contact met ons op via
+                <a href="mailto:support@quizkeeper.com" style="color: #D0B9A7;">support@quizkeeper.com</a>
+            </p>
+            <div class="small">
+                Dit is een automatisch gegenereerd bericht.<br>
+                © 2025 QuizKeeper. Gemaakt voor de beste pubquiz ervaring.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

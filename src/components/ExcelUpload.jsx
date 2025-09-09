@@ -1,10 +1,12 @@
 // Excel Upload Component for importing teams
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
+import { useModalContext } from './ModalProvider';
 
 export const ExcelUpload = ({ onTeamsImported, disabled = false }) => {
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const { showConfirm } = useModalContext();
 
   const processExcelFile = (file) => {
     return new Promise((resolve, reject) => {
@@ -104,8 +106,10 @@ export const ExcelUpload = ({ onTeamsImported, disabled = false }) => {
       const fullPreview = previewText + (remainingCount > 0 ? `\n... en nog ${remainingCount} meer` : '');
 
       // Show preview and confirm
-      const confirmed = window.confirm(
-        `${teamData.length} teams gevonden:\n\n${fullPreview}\n\nWil je deze teams importeren?\n\nLet op: Als je Excel teamnummers hebt, worden deze genegeerd en krijgen teams automatisch nieuwe nummers in volgorde van toevoeging.`
+      const confirmed = await showConfirm(
+        `${teamData.length} teams gevonden:\n\n${fullPreview}\n\nWil je deze teams importeren?\n\nLet op: Als je Excel teamnummers hebt, worden deze genegeerd en krijgen teams automatisch nieuwe nummers in volgorde van toevoeging.`,
+        'Teams importeren',
+        'question'
       );
 
       if (confirmed) {

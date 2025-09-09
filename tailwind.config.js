@@ -6,12 +6,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '#714329',      // Donkerbruin
-        'secondary': '#B08463',    // Warm bruin
-        'accent': '#B9937B',       // Roze-bruin
-        'background': '#D0B9A7',   // Licht beige
-        'neutral': '#B5A192',      // Neutraal bruin
-        'text-dark': '#000000',    // Zwart voor tekst
+        'primary': '#1e40af',      // Modern blauw
+        'secondary': '#3b82f6',    // Helder blauw
+        'accent': '#06b6d4',       // Cyan accent
+        'background': '#f8fafc',   // Zeer lichte grijze achtergrond
+        'neutral': '#64748b',      // Moderne grijstint
+        'text-dark': '#0f172a',    // Donkere tekst
+        'success': '#10b981',      // Groen voor succes
+        'warning': '#f59e0b',      // Oranje voor waarschuwingen
+        'error': '#ef4444',        // Rood voor fouten
+        'surface': '#ffffff',      // Wit voor cards/surfaces
+        'border': '#e2e8f0',       // Lichte border
       },
       fontFamily: {
         'sans': ['Inter', 'system-ui', 'sans-serif'],

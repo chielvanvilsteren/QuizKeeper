@@ -21,13 +21,13 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'medium' }) => 
       />
 
       {/* Modal */}
-      <div className={`relative bg-background rounded-2xl shadow-2xl ${sizeClasses[size]} w-full mx-4 max-h-screen overflow-y-auto border border-neutral/20 animate-slide-up`}>
+      <div className={`relative bg-surface rounded-2xl shadow-2xl ${sizeClasses[size]} w-full mx-4 max-h-screen overflow-y-auto border border-border animate-slide-up`}>
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-neutral/20 bg-white rounded-t-2xl">
-          <h2 className="text-2xl font-bold text-primary">{title}</h2>
+        <div className="flex items-center justify-between p-6 border-b border-border bg-surface rounded-t-2xl">
+          <h2 className="text-2xl font-bold text-text-dark">{title}</h2>
           <button
             onClick={onClose}
-            className="text-neutral hover:text-primary focus:outline-none transition-colors p-2 hover:bg-background rounded-lg"
+            className="text-neutral hover:text-text-dark focus:outline-none transition-colors p-2 hover:bg-background rounded-lg"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -36,7 +36,7 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'medium' }) => 
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-6 bg-surface">
           {children}
         </div>
       </div>
@@ -47,7 +47,7 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'medium' }) => 
 // Modern Score Table Component for Leaderboard
 export const ScoreTable = ({ teams, currentRound }) => {
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-neutral/20">
+    <div className="bg-surface rounded-xl overflow-hidden shadow-lg border border-border">
       <div className="bg-primary px-6 py-4">
         <h3 className="text-xl font-bold text-white flex items-center">
           🏆 Tussenstand - Na Ronde {currentRound - 1}
@@ -56,25 +56,25 @@ export const ScoreTable = ({ teams, currentRound }) => {
 
       <div className="overflow-x-auto">
         <table className="min-w-full">
-          <thead className="bg-secondary/10">
+          <thead className="bg-background">
             <tr>
-              <th className="px-6 py-4 text-left text-sm font-bold text-primary uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-sm font-bold text-text-dark uppercase tracking-wider">
                 Positie
               </th>
-              <th className="px-6 py-4 text-left text-sm font-bold text-primary uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-sm font-bold text-text-dark uppercase tracking-wider">
                 Team
               </th>
-              <th className="px-6 py-4 text-center text-sm font-bold text-primary uppercase tracking-wider">
+              <th className="px-6 py-4 text-center text-sm font-bold text-text-dark uppercase tracking-wider">
                 Punten
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-neutral/20">
+          <tbody className="divide-y divide-border">
             {teams.map((team, index) => (
               <tr
                 key={team.id}
-                className={`transition-colors hover:bg-background/50 ${
-                  index < 3 ? 'bg-gradient-to-r from-yellow-50 to-orange-50' : 'bg-white'
+                className={`transition-colors hover:bg-background ${
+                  index < 3 ? 'bg-gradient-to-r from-yellow-50 to-orange-50' : 'bg-surface'
                 }`}
               >
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -98,7 +98,7 @@ export const ScoreTable = ({ teams, currentRound }) => {
                       {team.teamNumber}
                     </div>
                     <div>
-                      <div className="text-lg font-bold text-primary">{team.name}</div>
+                      <div className="text-lg font-bold text-text-dark">{team.name}</div>
                       <div className="text-sm text-neutral">Team {team.teamNumber}</div>
                     </div>
                   </div>
@@ -114,9 +114,9 @@ export const ScoreTable = ({ teams, currentRound }) => {
           </tbody>
         </table>
         {teams.length === 0 && (
-          <div className="text-center py-12 bg-background/30">
+          <div className="text-center py-12 bg-background">
             <div className="text-4xl mb-4">🎯</div>
-            <p className="text-neutral text-lg">Nog geen teams toegevoegd</p>
+            <p className="text-text-dark text-lg">Nog geen teams toegevoegd</p>
           </div>
         )}
       </div>
@@ -193,7 +193,7 @@ export const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, quizName, 
 // Detailed Results Table Component
 export const DetailedResultsTable = ({ results }) => {
   if (!results || !results.teams) {
-    return <div className="text-center py-8 text-gray-500">Geen resultaten beschikbaar</div>;
+    return <div className="text-center py-8 text-black">Geen resultaten beschikbaar</div>;
   }
 
   const { teams, totalRounds } = results;
@@ -380,7 +380,7 @@ export const QuizCompletionModal = ({ isOpen, onClose, results, onShowDetailed }
         </div>
 
         {/* Top 3 Podium */}
-        <div className="bg-white rounded-2xl p-6 border border-neutral/20">
+        <div className="bg-surface rounded-2xl p-6 border border-border">
           <h4 className="text-xl font-bold text-primary mb-6">🏅 Top 3 Teams</h4>
           <div className="grid grid-cols-3 gap-6">
             {topThree.map((team, index) => (
@@ -481,7 +481,7 @@ export const RoundManagementModal = ({ isOpen, onClose, currentRound, roundScore
                       {team.points} punten
                     </span>
                   ) : (
-                    <span className="text-gray-400 text-sm">Nog niet ingevuld</span>
+                    <span className="text-black text-sm">Nog niet ingevuld</span>
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
@@ -1006,4 +1006,3 @@ export const AlertModal = ({ isOpen, onClose, title, message, type = 'info' }) =
     </Modal>
   );
 };
-
