@@ -1,7 +1,6 @@
 // Modern Teams Page for QuizKeeper
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { FormField, Button, Card, Badge, LoadingSpinner } from '../components/FormComponents';
 import { ExcelUpload } from '../components/ExcelUpload';
 import { useQuizStore } from '../store/quizStore';
 import { dbHelpers } from '../db/database';

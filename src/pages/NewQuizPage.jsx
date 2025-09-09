@@ -1,7 +1,6 @@
 // Modern New Quiz Page for QuizKeeper
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FormField, Button, Card } from '../components/FormComponents';
 import { dbHelpers } from '../db/database';
 import { authHelpers } from '../db/supabaseService';
 
