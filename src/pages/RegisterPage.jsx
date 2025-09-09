@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authHelpers } from '../db/supabaseService';
-import { emailService } from '../services/emailService';
 import { useModalContext } from '../components/ModalProvider';
 
 function RegisterPage() {
@@ -17,7 +16,7 @@ function RegisterPage() {
   const [passwordStrength, setPasswordStrength] = useState({ isValid: false, errors: [] });
   const navigate = useNavigate();
 
-  const { showSuccess, showError, alertModal, closeAlert } = useModalContext();
+  const { showSuccess, showError } = useModalContext();
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
